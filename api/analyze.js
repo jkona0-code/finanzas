@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   if (!imageBase64 || !mediaType) return res.status(400).json({ error: 'Faltan campos imageBase64 o mediaType' });
 
   const today = new Date().toISOString().slice(0, 10);
-  const CAT_GASTOS   = ['Alimentación','Arriendo','Servicios','Transporte','Salud','Educación','Entretenimiento','Ropa','Hogar','Mascota','Ahorro','Otro'];
+  const CAT_GASTOS   = ['Alimentación','Arriendo','Servicios','Transporte','Salud','Educación','Entretenimiento','Ropa','Hogar','Mascota','Ahorro','Iglesia','Otro'];
   const CAT_INGRESOS = ['Sueldo','Honorarios','Freelance','Arriendo cobrado','Bono','Regalo','Otro'];
 
   const prompt = `Eres un asistente que lee boletas, facturas y comprobantes de pago en Chile.
