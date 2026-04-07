@@ -29,8 +29,24 @@ Formato:
 {"tipo":"gasto o ingreso","monto":número entero CLP,"fecha":"YYYY-MM-DD","detalle":"máx 50 chars","categoria":"una de las listadas","notas":"opcional máx 80 chars"}`;
 
   try {
+    // Verificar modelos disponibles
+    const modelsRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models?key=${API_KEY}`
+    );
+    const modelsData = await modelsRes.json();
+    
+    const availableModels = modelsData.models
+      .filter(m => m.supportedGenerationMethods?.includes('generateContent'))
+      .map(m => m.name);
+    
+    const selectedModel = availableModels.length > 0 ? availableModels[0] : 'models/gemini-1.5-flash';
+    
+    if (!availableModels.includes('models/gemini-1.5-flash')) {
+      console.warn(`⚠️ gemini-1.5-flash no disponible. Modelos disponibles: ${availableModels.join(', ')}`);
+    }
+
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1/${selectedModel}:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
